@@ -1,9 +1,13 @@
 Data Visualization - Final Project
 
 Members:
+
 Young Jung Choi
+
 Ning Ning Du
+
 Bianca Hernandez
+
 Neil Hsu
 
 We plan on building on our previous Covid-19 project by adding machine learning algorithms. We hope to develop a predictive model that will give us insight into how the virus will continues to affect our world.
