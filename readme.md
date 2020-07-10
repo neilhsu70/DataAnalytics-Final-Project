@@ -18,16 +18,17 @@ kaggle.com
 Focusing on USA and Texas data
 
 Technologies used:
-
 Dash
 Postgres Database server on AWS
 
+How we'll integrate Machine Learning algorithms
 
-~Clustering by location or industry
-Regression into our Dashboard
+Regression algorithem into our Dashboard to ???
 
-Classification algorithms to determine wether social distancing / mandatory mask policies have been effective or not. We'll have to take into account the 2 week incubation time.
+Classification algorithms: 
+To determine wether social distancing / mandatory mask policies have been effective or not. We'll have to take into account the 2 week incubation time.
 
+Clustering algorithm:
 Density leading contributing factor to covid infection and fatality?
 
 
