@@ -122,7 +122,7 @@ fourth_row = dbc.Card([
         ])])
 #footer
 fifth_row = dbc.Container([
-        html.P('Data Source: COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University', style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
+        html.P('Data Source: COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University', style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center')
     ])
 
 def title_authors():
@@ -137,7 +137,7 @@ def bubble_animation_col():
 def global_line_graph():
     column = fourth_row
     return column 
-def footer():
+def footer_col():
     column = fifth_row
     return column 
     
