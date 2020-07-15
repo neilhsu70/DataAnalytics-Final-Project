@@ -86,6 +86,10 @@ full_grouped['New cases'] = full_grouped['New cases'].apply(lambda x: 0 if x<0 e
 full_grouped["Date"] = full_grouped["Date"].dt.strftime('%Y/%m/%d')
 
 
+#us data and cleaning 
+
+
+
 
 #plot
 def global_animation():
@@ -161,28 +165,31 @@ def plot_cases_for_country(ad):
          )) 
     return fig
 
-#us bar chart not being used 
-def us_bar(us_covid = pd.read_csv('US-COVID-19-time-series-clean-complete.csv')):
-    fig = go.Figure(go.Bar(x=us_covid["Date"], 
-                          y=us_covid["Confirmed"],
-                          name="Confirmed", 
-                          marker_color='red', opacity=.8
-                       ))
-    fig.add_trace(go.Bar(x=us_covid["Date"], 
-                        y=us_covid["Deaths"],
-                        name="Deaths",
-                        marker_color='grey', opacity=1
-                       ))
-    fig.update_layout(
-                        barmode='overlay', 
-                        xaxis={'categoryorder':'total ascending'},
-                        xaxis_type='category',
-                        title={
-                            'text': 'Cumulative COVID-19 US trend',
-                            'y':0.79,
-                            'x':0.45,
-                            'xanchor': 'center',
-                            'yanchor': 'top'},)
-    fig.update_xaxes(title= 'Time' ,showline=True)
-    fig.update_yaxes(title= 'Number of cases', showline=True)
-    return fig
+#us animation
+def us_animation():
+    fig = px.scatter_mapbox(cumulative_df_us, 
+                        lat="Lat", 
+                        lon="Long_", 
+                        size=cumulative_df_us["Confirmed"]**.5*50,
+                        template = "seaborn",
+                        color = "Confirmed",  
+                        color_continuous_scale="spectral",
+                        zoom=2, 
+                        size_max=10, 
+                        animation_frame="Date",
+                        hover_name="Province_State", 
+                        hover_data= ["Province_State","Confirmed"])
+                        
+                            
+
+    fig.update_layout(margin=dict(l=1, r=1, t=1, b=1),
+                  autosize=True,
+                  mapbox_style="carto-positron")
+    #update different layouts
+    fig.layout.sliders[0].currentvalue.prefix=""
+    fig.layout.sliders[0].len=.9
+    fig.layout.sliders[0].currentvalue.font.color="black"
+    fig.layout.sliders[0].currentvalue.font.size=18
+    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 200
+    return fig 
+
