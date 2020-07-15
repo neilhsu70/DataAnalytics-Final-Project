@@ -21,6 +21,18 @@ confirmed_df = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COV
 recovered_df = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv')
 country_df = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases_country.csv')
 
+#Data/add comma
+country_df.fillna(0,inplace=True)
+country_df['Total_Confirmed']=country_df['Confirmed'].sum()
+country_df['Total_Recovered']=country_df['Recovered'].sum()
+country_df['Total_Deaths']=country_df['Deaths'].sum()
+country_df['Total_Active']=country_df['Active'].sum()
+
+country_df['Total_Deaths'] = country_df['Total_Deaths'].astype(int).apply(lambda x: "{:,}".format(x))
+country_df['Total_Recovered'] = country_df['Total_Recovered'].astype(int).apply(lambda x: "{:,}".format(x))
+country_df['Total_Active'] = country_df['Total_Active'].astype(int).apply(lambda x: "{:,}".format(x))
+country_df['Total_Confirmed'] = country_df['Total_Confirmed'].astype(np.int64).apply(lambda x: "{:,}".format(x))
+
 death_df.drop('Province/State', axis=1, inplace=True)
 confirmed_df.drop('Province/State', axis=1, inplace=True)
 recovered_df.drop('Province/State', axis=1, inplace=True)
@@ -35,7 +47,7 @@ country_df.sort_values('Confirmed', ascending=False, inplace=True)
 
 #heading and contributors
 title_contributors =dbc.Card([dbc.CardBody([dbc.Container([ 
-            html.H1(children='Remotely monitoring the COVID-19 pandemic', className='mt-5 py-4 pb-3 text-center'),
+            html.H1(children='Remotely monitoring the COVID-19 pandemic: global', className='mt-5 py-4 pb-3 text-center'),
             html.P("Dashboard contributors: Bianca A. Hernandez, Ningning Du, Neil Hsu, Youngjung Choi", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
             ])])])
 
@@ -43,24 +55,24 @@ title_contributors =dbc.Card([dbc.CardBody([dbc.Container([
 
 first_card=dbc.Card([
     dbc.CardBody(children=[html.H4('Confirmed', style = {'padding-top': '5px','font-weight':'bold', 'color':'#5e4fa2'}),
-        html.Div([dbc.Button(country_df['Confirmed'].sum(), color="#5e4fa2", size = "lg")])],
+        html.Div([dbc.Button(country_df['Total_Confirmed'].max(), color="#5e4fa2", size = "lg")])],
         className='text-center')
                     ]),
 second_card=dbc.Card([
     dbc.CardBody(children = [html.H4('Recovered', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#66c2a5'}),
-        html.Div([dbc.Button(country_df['Recovered'].sum(), color="#66c2a5", size = "lg")])],
+        html.Div([dbc.Button(country_df['Total_Recovered'].max(), color="#66c2a5", size = "lg")])],
         className='text-center'),
                     ]),
 third_card=dbc.Card([
     dbc.CardBody(children = [html.H4('Deaths', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#d53e50'}),
-        html.Div([dbc.Button(country_df['Deaths'].sum(), color="#d53e50", size = "lg")])],
+        html.Div([dbc.Button(country_df['Total_Deaths'].max(), color="#d53e50", size = "lg")])],
         className='text-center'),
                     ]),
 fourth_card=dbc.Card([
     dbc.CardBody(children = [html.H4('Active', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#f46d43',}),
-        html.Div([dbc.Button(country_df['Active'].sum(), color="#f46d43", size = "lg")])],
-        className='text-center'),
-])
+        html.Div([dbc.Button(country_df['Total_Active'].max(), color="#f46d43", size = "lg")])],
+        className='text-center')
+                    ])
 
 #headings for bubble and global animations
 tally_heading = html.H2(children='World Cases Tally', className='mt-5 py-4 pb-3 text-center')
