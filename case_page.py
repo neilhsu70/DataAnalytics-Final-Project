@@ -5,11 +5,10 @@ import dash_html_components as html
 
 from navbar import dash_navbar
 from page1 import tallies, title_authors, footer_row
-from page3 import case_container
+from page3 import case_title, case_container
 
 nav = dash_navbar()
-titleauthors = title_authors()
-tallycards = tallies()
+case_study_title = case_title()
 case_study_container = case_container()
 
 footer = footer_row()
@@ -17,8 +16,7 @@ footer = footer_row()
 def case_covid():
     layout = html.Div([
         nav,
-        titleauthors,
-        tallycards,
+        case_study_title,
         case_study_container,
         footer
     ])
