@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 
 from USpage import app_covid
+from case_page import case_covid 
 from homepage import Homepage
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
@@ -21,6 +22,8 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == '/US':
         return app_covid()
+    elif pathname == '/Case':
+        return case_covid()
     else:
         return Homepage()
 
