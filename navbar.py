@@ -7,7 +7,17 @@ from dash.dependencies import Input, Output
 def dash_navbar():
     navbar = dbc.NavbarSimple(  
     children=[
-        dbc.NavItem(dbc.NavLink("US Analysis & Projections", href="/US")),
+        dbc.NavItem(dbc.NavLink("Home", href="/home")),
+        dbc.DropdownMenu(
+            children=[
+                dbc.DropdownMenuItem("US Analysis", href="/US"),
+                dbc.DropdownMenuItem("Case Study", href="/Case"),   
+            ],
+            nav=True,
+            in_navbar=True,
+            label="More",
+        ),
+                
     ],
     brand="COVID-19 Pandemic Dashboard",
     brand_href="/home",
@@ -16,4 +26,5 @@ def dash_navbar():
     sticky="top"
     )
     return navbar
+
 
