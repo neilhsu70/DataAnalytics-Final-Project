@@ -193,3 +193,119 @@ def us_animation():
     fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 200
     return fig 
 
+import lightgbm as lgb
+import lightgbm as LGBMRegressor
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv("diagnosis-of-covid-19-and-its-clinical-spectrum.csv")
+
+#number of unique classes in each object column
+df.columns = [x.lower().strip().replace(' ','_') for x in df.columns]
+df.select_dtypes('object').apply(pd.Series.nunique, axis = 0)
+
+#first ten correlations between the features in dataset
+features = df.columns.values[2:112]
+corrs_ = df[features].corr().abs().unstack().sort_values(kind="quicksort").reset_index()
+corrs_ = corrs_[corrs_['level_0'] != corrs_['level_1']]
+
+#Encoding variables: find a way to encode (represent) these variables as numbers before handing them off to the model
+
+#fill in mean for floats
+for c in df.columns:
+    if df[c].dtype=='float16' or  df[c].dtype=='float32' or  df[c].dtype=='float64':
+        df[c].fillna(df[c].mean())
+
+#fill in -999 for categoricals
+df = df.fillna(-999)
+
+#label Encoding
+for f in df.columns:
+    if df[f].dtype=='object': 
+        lbl = preprocessing.LabelEncoder()
+        lbl.fit(list(df[f].values))
+        df[f] = lbl.transform(list(df[f].values))
+
+#threshold for removing correlated variables
+threshold = 0.92
+
+#absolute value correlation matrix
+corr_matrix = df.corr().abs()
+corr_matrix.head()
+
+#upper triangle of correlations
+upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+
+#select columns with correlations above threshold
+to_drop = [column for column in upper.columns if any(upper[column] > threshold)]
+dataset = df.drop(columns = to_drop)
+
+#remove missing values
+#dataset missing values (in percent)
+dataset_missing = (dataset.isnull().sum() / len(dataset)).sort_values(ascending = False)
+
+#identify missing values above threshold
+dataset_missing_ = dataset_missing.index[dataset_missing > 0.85]
+all_missing = list(set(dataset_missing_))
+dataset = dataset.drop(columns = all_missing)
+
+#feature selection through feature importance
+cat_features = [i for i in dataset.columns if str(dataset[i].dtype) in ['object', 'category']]
+
+if len(cat_features) > 0:
+    dataset[cat_features] = dataset[cat_features].astype('category')
+
+
+df_lgb = dataset.copy()
+for i in cat_features:
+    df_lgb[i] = dataset[i].cat.codes
+
+df_lgb.columns = ["".join (c if c.isalnum() else "_" for c in str(x)) for x in df_lgb.columns]
+
+dataset_labels = df_lgb['sars_cov_2_exam_result']
+df_lgb_ = df_lgb.copy()
+df_lgb = df_lgb.drop(['patient_id', 
+                      'sars_cov_2_exam_result', 
+                      'patient_addmited_to_regular_ward_1_yes_0_no',
+                      'patient_addmited_to_semi_intensive_unit_1_yes_0_no',
+                      'patient_addmited_to_intensive_care_unit_1_yes_0_no'
+                ], axis=1)
+x = df_lgb.copy()
+
+# Initialize an empty array to hold feature importances
+feature_importances = np.zeros(df_lgb.shape[1])
+
+# Create the model with several hyperparameters
+model = lgb.LGBMClassifier(objective='binary', boosting_type = 'goss', n_estimators = 5000, class_weight = 'balanced')
+
+# Fit the model twice to avoid overfitting
+for i in range(2):
+    # Split into training and validation set
+    dataset_features, valid_features, dataset_features_y, valid_y = train_test_split(x, dataset_labels, test_size = 0.20, random_state = i)
+    
+    # Train using early stopping
+    model.fit(dataset_features, dataset_features_y, early_stopping_rounds=100, eval_set = [(valid_features, valid_y)], 
+              eval_metric = 'auc', verbose = 200)
+    
+    # Record the feature importances
+    feature_importances += model.feature_importances_
+#average feature importances! 
+feature_importances = feature_importances / 2
+feature_importances = pd.DataFrame({'feature': list(df_lgb.columns), 'importance': feature_importances}).sort_values('importance', ascending = False)
+
+#for dash app figure 
+fig_feature_importances = feature_importances[:18]
+
+#log transform 
+#fig_feature_importances['log10_value'] = np.log10(fig_feature_importances.loc[:,'importance']) 
+log_features = fig_feature_importances
+
+
+def case_features():
+    fig = go.Figure(go.Bar(
+            x=log_features["log10_value"],
+            y=log_features["feature"],
+            orientation='h'))
+    fig.update_layout(yaxis=dict(autorange="reversed"))
+    return fig 
+
