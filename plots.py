@@ -297,8 +297,9 @@ feature_importances = pd.DataFrame({'feature': list(df_lgb.columns), 'importance
 fig_feature_importances = feature_importances[:18]
 
 #log transform 
-#fig_feature_importances['log10_value'] = np.log10(fig_feature_importances.loc[:,'importance']) 
+fig_feature_importances['log10_value'] = np.log10(fig_feature_importances.loc[:,'importance']) 
 log_features = fig_feature_importances
+
 
 
 def case_features():
