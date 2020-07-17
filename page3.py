@@ -27,6 +27,20 @@ case_container1 = dbc.Card([
                             html.H4("Question:", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
                             html.P("Would it be possible to predict the test result for SARS-Cov-2 (positive/negative) based on the results of laboratory tests commonly collected for a suspected COVID-19 case during a visit to the emergency room?"),    
                     ])]))])])])
+case_container2 = dbc.Card([
+    dbc.CardBody([
+        dbc.Row([
+            dbc.Col(
+                dbc.Container([
+                    html.Div([
+                        html.H4('Average feature importance')
+                    ])
+                ])
+            )
+        ])
+    ])
+])
+
 
 def case_title():
     value = title
@@ -34,3 +48,6 @@ def case_title():
 def case_container():
     value = case_container1
     return value
+def case_2():
+    value = case_container2
+    return value 
