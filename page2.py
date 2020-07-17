@@ -53,7 +53,7 @@ US_fourth_card=dbc.Card([
 #global confirmed, recovered and deaths row
 container1 = dbc.Card([dbc.CardBody([dbc.Container([ 
             html.H1(children='Just example tableau', className='mt-5 py-4 pb-3 text-center'),
-            html.Iframe(src="https://public.tableau.com/views/USmapsdeathscases/Story1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link:showVizHome=no&:embed=true", width="1000", height="827")
+            html.Iframe(src="https://public.tableau.com/views/USmapsdeathscases/Story1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link:showVizHome=no&:embed=true", width="1000", height="827"),
             ])])])
 container2 = dbc.Card([dbc.CardBody([dbc.Container([ 
             html.H1(children='This is where we can put an ML simulator', className='mt-5 py-4 pb-3 text-center')
