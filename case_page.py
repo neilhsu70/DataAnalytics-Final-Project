@@ -5,7 +5,7 @@ import dash_html_components as html
 
 from navbar import dash_navbar
 from page1 import tallies, title_authors, footer_row
-from page3 import case_title, case_container, case_2, case_3
+from page3 import case_title, case_container, case_2, case_3, cas_study_footer
 
 
 nav = dash_navbar()
@@ -13,7 +13,7 @@ case_study_title = case_title()
 case_study_container = case_container()
 case_study_container2 = case_2()
 case_study_container3 = case_3()
-footer = footer_row()
+case_source = cas_study_footer()
 
 def case_covid():
     layout = html.Div([
@@ -22,7 +22,7 @@ def case_covid():
         case_study_container,
         case_study_container2,
         case_study_container3,
-        footer
+        case_source
     ])
     return layout
 #to test if running uncomment below: 
