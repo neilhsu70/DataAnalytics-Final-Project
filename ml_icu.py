@@ -54,6 +54,8 @@ feature_importance= pd.DataFrame({
     
 })
 
+feature_importance= feature_importance.sort_values(by="importance", ascending=False)
+
 def case_features_icu():
     fig = go.Figure(go.Bar(
             x=feature_importance["importance"],
