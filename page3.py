@@ -4,6 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from plots import case_features 
+from ml_icu import case_features_icu
 
 #global confirmed, recovered and deaths row
 title =dbc.Card([dbc.CardBody([dbc.Container([ 
@@ -38,7 +39,8 @@ case_container2 = dbc.Card([
                 html.H4("Predicting confirmed COVID-19 cases among suspected cases", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
                 html.P("EDA: looked at distribution of dataset; handled missing values; identified correlations; encoded variables to deal with catergorical variables; removed collinear variables and identified most important features from dataset."),
                 html.P("ML: ran split and train validation, ran model selector (KNeighborsClassifier, SVC, DecisionTreeClassifier, RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier), ran hyperparameter optimization (find best parameters for algorithm), created a base model and trained the model with GridSearch."),
-                html.P("Findings: ...."),
+                html.P("Results: ....."),
+                html.P("Conclusion: ....."),
                 ])
             ),
             dbc.Col(
@@ -66,7 +68,8 @@ case_container3 = dbc.Card([
                 html.H4("Predicting admission to ICU among confirmed COVID-19 cases", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
                 html.P("EDA: ...."),
                 html.P("ML: ....."),
-                html.P("Findings: ....."),
+                html.P("Results: ....."),
+                html.P("Conclusion: ....."),
 
                 ])
             ),
@@ -74,8 +77,8 @@ case_container3 = dbc.Card([
                 dbc.Container([
                     html.Div([
                         dcc.Graph(
-                            id = "case-fig", 
-                            figure = case_features()
+                            id = "case-figicu", 
+                            figure = case_features_icu()
                     
                         )
                         
