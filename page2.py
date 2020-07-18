@@ -50,14 +50,18 @@ US_fourth_card=dbc.Card([
         className='text-center'),
 ])
 
-#global confirmed, recovered and deaths row
 container1 = dbc.Card([dbc.CardBody([dbc.Container([ 
-            html.H1(children='Just example tableau', className='mt-5 py-4 pb-3 text-center'),
-            html.Iframe(src="https://public.tableau.com/views/USmapsdeathscases/Story1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link:showVizHome=no&:embed=true", width="1000", height="827"),
+            html.H1(children='US Map Analysis', className='mt-3 py-2 pb-1 text-center'),
             ])])])
-container2 = dbc.Card([dbc.CardBody([dbc.Container([ 
-            html.H1(children='This is where we can put an ML simulator', className='mt-5 py-4 pb-3 text-center')
-            ])])])
+
+container2 = html.Div([
+        html.Iframe(src="https://public.tableau.com/views/USmapsdeathscases/Dashboard1?:embed=yes&:showVizHome=no", width = "100%", height = "1000")
+])
+
+US_first_row = html.Div([
+    html.Br(),
+        html.Iframe(src="https://public.tableau.com/views/Top_10_states_ACD/Dashboard2?:embed=yes&:showVizHome=no", width = "100%", height = "1000")
+])
 
 def US_title_authors():
     heading = US_title_contributors
@@ -72,6 +76,9 @@ def container_box():
     return value
 def container_box2():
     value = container2
+    return value
+def US_main():
+    value = US_first_row
     return value
 
 
