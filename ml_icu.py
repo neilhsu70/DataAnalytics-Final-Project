@@ -21,16 +21,19 @@ df_positive_selected_features = (df_positive[["patient_addmited_to_intensive_car
                                               "patient_age_quantile",
                                               "hematocrit",
                                               "hemoglobin",
-                                              "platelets",
+                                            #   "platelets",
                                               "mean_platelet_volume",
                                               "red_blood_cells",
                                               "lymphocytes",
-                                              "basophils",
+                                            #   "basophils",
                                               "mean_corpuscular_hemoglobin_mch",
-                                              "eosinophils",
-                                              "mean_corpuscular_volume_mcv",
+                                            #   "eosinophils",
+                                            #   "mean_corpuscular_volume_mcv",
                                               "monocytes",
                                               "red_blood_cell_distribution_width_rdw",
+                                              "neutrophils",
+                                              "urea",
+                                              "proteina_c_reativa_mg_dl",
                                              ]])
 
 df_positive_selected_features_drop = df_positive_selected_features.dropna()
