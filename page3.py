@@ -39,10 +39,7 @@ case_container2 = dbc.Card([
                 html.H4("Predicting confirmed COVID-19 cases among suspected cases", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
                 html.P("EDA: looked at distribution of dataset; handled missing values; identified correlations; encoded variables to deal with catergorical variables; removed collinear variables and identified most important features from dataset."),
                 html.P("ML: ran split and train validation, ran model selector (KNeighborsClassifier, SVC, DecisionTreeClassifier, RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier), ran hyperparameter optimization (find best parameters for algorithm), created a base model and trained the model with GridSearch."),
-                html.P("GridSearch training results:"),
-                html.P("Training Data Score: 0.9045569620253164", style = {'font-weight': 'bold'}, className='text-center'),
-                html.P("Testing Data Score: 0.9002361275088547", style = {'font-weight': 'bold'}, className='text-center'),
-                html.P("Conclusion: ....."),
+
                 ])
             ),
             dbc.Col(
@@ -68,10 +65,9 @@ case_container3 = dbc.Card([
             dbc.Col(
                 html.Div([
                 html.H4("Predicting admission to ICU among confirmed COVID-19 cases", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
-                html.P("EDA: ...."),
-                html.P("ML: ....."),
-                html.P("GridSearch training results: ....."),
-                html.P("Conclusion: ....."),
+                html.P("EDA: Data is imbalanced: 558 patients tested positive/8 needed ICU care. Many features are included in the datasheets but not all are usable due to small sample sizes: patient age, bloodwork(cell counts, potassium, sodium etc), other viruses test result (influenza a, b, h1n1 etc) and urine analysis."),
+                html.P("ML: A Random Forest Classifier model was chosen: SMOTE oversampling for minority group, feature selection, hyperparameter tuning for overfitting issue and improving specificity and sensitivity scores"),
+                
 
                 ])
             ),
