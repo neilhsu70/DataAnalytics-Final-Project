@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/neilhsu/Documents/Coding/UT-Homework/DataAnalytics-Final-Project/ML/mlruns/0/b54bb05eb1984c928202b9f0ce826338/artifacts
+end_time: 1595372160710
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: b54bb05eb1984c928202b9f0ce826338
+run_uuid: b54bb05eb1984c928202b9f0ce826338
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1595372152774
+status: 3
+tags: []
+user_id: neilhsu
